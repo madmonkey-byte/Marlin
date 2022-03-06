@@ -32,13 +32,12 @@ def encrypt(source, target, env):
     fwname = board.get("build.encrypt")
     print("Encrypting %s to %s" % (target[0].path, fwname))
     firmware = open(target[0].path, "rb")
-    renamed = open(target[0].dir.path + "/" + fwname, "wb")
-    length = os.path.getsize(target[0].path)
+    with open(f'{target[0].dir.path}/{fwname}', "wb") as renamed:
+        length = os.path.getsize(target[0].path)
 
-    encrypt_file(firmware, renamed, length)
+        encrypt_file(firmware, renamed, length)
 
-    firmware.close()
-    renamed.close()
+        firmware.close()
 
 if 'encrypt' in board.get("build").keys():
     marlin.add_post_action(encrypt);
